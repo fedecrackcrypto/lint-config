@@ -1,0 +1,57 @@
+{
+  "name": "@fedecrackcrypto/lint-config",
+  "version": "1.0.0",
+  "description": "Shared lint baseline: ESLint, strict tsconfig, Prettier, dependency-cruiser and knip presets.",
+  "license": "MIT",
+  "type": "module",
+  "repository": "github:fedecrackcrypto/lint-config",
+  "packageManager": "pnpm@12.16.1",
+  "exports": {
+    "./eslint": "./eslint/base.js",
+    "./eslint/react": "./eslint/react.js",
+    "./eslint/next": "./eslint/next.js",
+    "./tsconfig/strict.json": "./tsconfig/strict.json",
+    "./prettier": "./prettier.js",
+    "./depcruise": "./depcruise/base.cjs",
+    "./knip": "./knip.js"
+  },
+  "files": [
+    "eslint",
+    "tsconfig",
+    "depcruise",
+    "prettier.js",
+    "knip.js"
+  ],
+  "scripts": {
+    "format": "prettier --write .",
+    "test": "node test/smoke.mjs",
+    "check": "prettier --check . && node test/smoke.mjs"
+  },
+  "dependencies": {
+    "@eslint-community/eslint-plugin-eslint-comments": "^4.8.1",
+    "@eslint-react/eslint-plugin": "^5.30.2",
+    "@eslint/js": "^10.0.1",
+    "@next/eslint-plugin-next": "^16.4.6",
+    "@vitest/eslint-plugin": "^1.6.28",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.14.0",
+    "typescript-eslint": "^8.72.2"
+  },
+  "peerDependencies": {
+    "dependency-cruiser": "^18.7.2",
+    "eslint": "^10.0.0",
+    "knip": "^6.45.1",
+    "prettier": "^3.10.1",
+    "typescript": ">=5.9.0 <6.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "dependency-cruiser": "^18.7.2",
+    "eslint": "^10.15.0",
+    "knip": "^6.45.1",
+    "prettier": "^3.10.1",
+    "typescript": "^5.9.3",
+    "vitest": "^5.1.0"
+  }
+}
