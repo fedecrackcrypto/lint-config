@@ -54,7 +54,7 @@ export default [
 {
   "prettier": "@fedecrackcrypto/lint-config/prettier",
   "scripts": {
-    "lint": "eslint . --prune-suppressions && eslint .",
+    "lint": "eslint . --prune-suppressions",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "format": "prettier --write .",
