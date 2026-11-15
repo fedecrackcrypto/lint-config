@@ -1,6 +1,6 @@
 {
   "name": "@fedecrackcrypto/lint-config",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Shared lint baseline: ESLint, strict tsconfig, Prettier, dependency-cruiser and knip presets.",
   "license": "MIT",
   "type": "module",
@@ -12,7 +12,7 @@
     "./eslint/next": "./eslint/next.js",
     "./tsconfig/strict.json": "./tsconfig/strict.json",
     "./prettier": "./prettier.js",
-    "./depcruise": "./depcruise/base.cjs",
+    "./depcruise": "./depcruise/index.cjs",
     "./knip": "./knip.js"
   },
   "files": [

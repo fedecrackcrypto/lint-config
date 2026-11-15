@@ -66,7 +66,7 @@ await import("../eslint/next.js");
 await import("../prettier.js");
 await import("../knip.js");
 const require = createRequire(import.meta.url);
-const depcruise = require("../depcruise/base.cjs");
+const depcruise = require("../depcruise/index.cjs");
 assert.ok(depcruise.forbidden.length > 0);
 JSON.parse(
   await readFile(new URL("../tsconfig/strict.json", import.meta.url), "utf8"),
