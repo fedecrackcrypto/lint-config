@@ -65,6 +65,9 @@ export default [
 }
 ```
 
+`.prettierignore` must list the lockfile and `eslint-suppressions.json`: ESLint writes the
+suppressions file in its own format, so Prettier would fail every prune.
+
 In a monorepo, `depcruise` takes the workspace folders (`depcruise apps packages`), and
 `typecheck`/`test` run across workspaces (`pnpm -r typecheck`).
 
