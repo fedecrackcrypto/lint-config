@@ -14,7 +14,11 @@ module.exports = {
       comment:
         "Circular imports. Move the shared code into a module both sides import.",
       from: {},
-      to: { circular: true },
+      to: {
+        circular: true,
+        // A cycle made only of `import type` edges is erased at compile time.
+        viaOnly: { dependencyTypesNot: ["type-only"] },
+      },
     },
     {
       name: "no-orphans",
@@ -27,7 +31,7 @@ module.exports = {
           "(^|/)[.][^/]+[.](?:js|cjs|mjs|ts|cts|mts|json)$",
           "[.]d[.][cm]?ts$",
           "(^|/)tsconfig[.]json$",
-          "(^|/)(?:babel|webpack|vite|vitest|next|drizzle|eslint|knip|prettier|playwright)[.]config[.](?:js|cjs|mjs|ts|cts|mts|json)$",
+          "(^|/)[^/]+[.]config[.](?:js|cjs|mjs|ts|cts|mts|json)$",
         ],
       },
       to: {},
@@ -55,7 +59,10 @@ module.exports = {
         "Production code imports a devDependency. Move it to dependencies, or keep the import in test or config code.",
       from: {
         path: "(^|/)src/",
-        pathNot: "[.](?:spec|test)[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$",
+        pathNot: [
+          "[.](?:spec|test)[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$",
+          "[.]d[.][cm]?ts$",
+        ],
       },
       to: {
         dependencyTypes: ["npm-dev"],
