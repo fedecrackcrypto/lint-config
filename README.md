@@ -58,10 +58,15 @@ export default [
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "format": "prettier --write .",
+    "depcruise": "depcruise src",
+    "knip": "knip",
     "check": "prettier --check . && pnpm lint && pnpm typecheck && pnpm depcruise && pnpm knip && pnpm test"
   }
 }
 ```
+
+In a monorepo, `depcruise` takes the workspace folders (`depcruise apps packages`), and
+`typecheck`/`test` run across workspaces (`pnpm -r typecheck`).
 
 ## TypeScript 7 repos (temporary)
 
