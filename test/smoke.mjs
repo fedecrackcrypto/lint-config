@@ -29,6 +29,11 @@ function expectRules(file, rules) {
 }
 
 assert.deepEqual(byFile.get("src/clean.ts"), [], "src/clean.ts must be clean");
+assert.deepEqual(
+  byFile.get("src/scripts/report.ts"),
+  [],
+  "scripts may use console",
+);
 expectRules("src/escape-hatches.ts", [
   "@typescript-eslint/no-explicit-any",
   "@typescript-eslint/ban-ts-comment",

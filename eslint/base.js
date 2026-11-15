@@ -76,7 +76,33 @@ export function base({ tsconfigRootDir, ignores = [] }) {
           "@typescript-eslint/switch-exhaustiveness-check": "error",
           "@typescript-eslint/consistent-type-imports": "error",
           "@typescript-eslint/no-import-type-side-effects": "error",
+
+          // Strict-preset settings loosened where they flag correct code.
+          // Numbers in template strings are fine; undefined and null still fail.
+          "@typescript-eslint/restrict-template-expressions": [
+            "error",
+            {
+              allowAny: false,
+              allowBoolean: false,
+              allowNever: false,
+              allowNullish: false,
+              allowNumber: true,
+              allowRegExp: false,
+            },
+          ],
+          // Framework classes (NestJS modules) are empty or static by design.
+          "@typescript-eslint/no-extraneous-class": [
+            "error",
+            { allowWithDecorator: true },
+          ],
         },
+      },
+
+      // CLI scripts print on purpose.
+      {
+        name: "lint-config/scripts",
+        files: ["**/scripts/**"],
+        rules: { "no-console": "off" },
       },
 
       // Every suppression must say why, and must name its rules.
@@ -108,6 +134,8 @@ export function base({ tsconfigRootDir, ignores = [] }) {
           "vitest/expect-expect": "error",
           "vitest/no-identical-title": "error",
           "vitest/valid-title": "error",
+          // expect(value, message) is Vitest's documented custom-message form.
+          "vitest/valid-expect": ["error", { maxArgs: 2 }],
         },
       },
 
