@@ -38,18 +38,24 @@ export function react({ files = reactFiles } = {}) {
         "@eslint-react/purity": "off",
         "@eslint-react/set-state-in-effect": "off",
 
-        // Ban useEffect and useLayoutEffect, as a named import or a member access
-        // (React.useEffect). Syntax selectors rather than no-restricted-imports, which
-        // would also flag every `import * as React from "react"`.
+        // Ban useEffect and useLayoutEffect at each call, so a justified effect is
+        // suppressed on its own line with its own reason. Syntax selectors rather than
+        // no-restricted-imports, which would also flag `import * as React from "react"`.
         "no-restricted-syntax": [
           "error",
           {
-            selector:
-              "ImportDeclaration[source.value='react'] > ImportSpecifier[imported.name=/^use(Layout)?Effect$/]",
+            selector: "CallExpression[callee.name=/^use(Layout)?Effect$/]",
             message: effectMessage,
           },
           {
-            selector: "MemberExpression[property.name=/^use(Layout)?Effect$/]",
+            selector:
+              "CallExpression > MemberExpression.callee[property.name=/^use(Layout)?Effect$/]",
+            message: effectMessage,
+          },
+          {
+            // A renamed import would dodge the call check.
+            selector:
+              "ImportDeclaration[source.value='react'] > ImportSpecifier[imported.name=/^use(Layout)?Effect$/][local.name!=/^use(Layout)?Effect$/]",
             message: effectMessage,
           },
         ],
