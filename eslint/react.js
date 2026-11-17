@@ -9,18 +9,19 @@ export const reactFiles = ["**/*.{tsx,jsx}"];
 
 const effectMessage =
   "Effects are banned: they cause extra renders, stale state and race conditions. " +
-  "Derive values during render (useMemo if slow), act in event handlers, fetch through the data layer, " +
-  "and reset state with a `key`. See https://react.dev/learn/you-might-not-need-an-effect. " +
-  "Only syncing with an external system (a subscription, a DOM API, a timer) justifies one; " +
-  "then suppress it with `-- <which external system>` as the reason.";
+  "Derive values during render (useMemo if slow), act in event handlers (keyboard input included), " +
+  "fetch through the data layer, reset state with a `key`, and animate with CSS or declarative props. " +
+  "See https://react.dev/learn/you-might-not-need-an-effect. " +
+  "Do not suppress this rule yourself. If an effect really is the only correct route, " +
+  "stop and ask the user, explaining why each alternative fails.";
 
 /**
  * @param {object} [options]
  * @param {string[]} [options.files] Files that hold React code. Defaults to all .tsx and .jsx files.
  */
 export function react({ files = reactFiles } = {}) {
-  return errorsOnly(
-    defineConfig({
+  return errorsOnly([
+    ...defineConfig({
       name: "lint-config/react",
       files,
       extends: [
@@ -37,9 +38,13 @@ export function react({ files = reactFiles } = {}) {
         "@eslint-react/exhaustive-deps": "off",
         "@eslint-react/purity": "off",
         "@eslint-react/set-state-in-effect": "off",
-
-        // Ban useEffect and useLayoutEffect at each call, so a justified effect is
-        // suppressed on its own line with its own reason. Syntax selectors rather than
+      },
+    }),
+    ...defineConfig({
+      // Every file, not just React files: custom hooks live in .ts files too.
+      name: "lint-config/react/no-effects",
+      rules: {
+        // Ban useEffect and useLayoutEffect at each call. Syntax selectors rather than
         // no-restricted-imports, which would also flag `import * as React from "react"`.
         "no-restricted-syntax": [
           "error",
@@ -61,7 +66,7 @@ export function react({ files = reactFiles } = {}) {
         ],
       },
     }),
-  );
+  ]);
 }
 
 export default react;

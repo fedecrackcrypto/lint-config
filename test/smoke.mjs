@@ -55,6 +55,11 @@ assert.deepEqual(
   "useEffect, useLayoutEffect and React.useEffect must each be reported",
 );
 assert.deepEqual(
+  byFile.get("src/use-ticker.ts"),
+  ["no-restricted-syntax"],
+  "effects in .ts hooks must be reported too",
+);
+assert.deepEqual(
   byFile.get("src/Renamed.tsx"),
   ["no-restricted-syntax"],
   "a renamed effect import must be reported",
