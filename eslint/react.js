@@ -38,24 +38,18 @@ export function react({ files = reactFiles } = {}) {
         "@eslint-react/purity": "off",
         "@eslint-react/set-state-in-effect": "off",
 
-        // Ban useEffect and useLayoutEffect, imported or as React.useEffect.
-        "no-restricted-imports": [
-          "error",
-          {
-            paths: [
-              {
-                name: "react",
-                importNames: ["useEffect", "useLayoutEffect"],
-                message: effectMessage,
-              },
-            ],
-          },
-        ],
+        // Ban useEffect and useLayoutEffect, as a named import or a member access
+        // (React.useEffect). Syntax selectors rather than no-restricted-imports, which
+        // would also flag every `import * as React from "react"`.
         "no-restricted-syntax": [
           "error",
           {
             selector:
-              "MemberExpression[object.name='React'][property.name=/^use(Layout)?Effect$/]",
+              "ImportDeclaration[source.value='react'] > ImportSpecifier[imported.name=/^use(Layout)?Effect$/]",
+            message: effectMessage,
+          },
+          {
+            selector: "MemberExpression[property.name=/^use(Layout)?Effect$/]",
             message: effectMessage,
           },
         ],

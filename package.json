@@ -1,6 +1,6 @@
 {
   "name": "@fedecrackcrypto/lint-config",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Shared lint baseline: ESLint, strict tsconfig, Prettier, dependency-cruiser and knip presets.",
   "license": "MIT",
   "type": "module",

@@ -51,8 +51,13 @@ expectRules("src/math.test.ts", [
 expectRules("src/Widget.tsx", ["react-hooks/rules-of-hooks"]);
 assert.deepEqual(
   byFile.get("src/Effects.tsx"),
-  ["no-restricted-imports", "no-restricted-imports", "no-restricted-syntax"],
+  ["no-restricted-syntax", "no-restricted-syntax", "no-restricted-syntax"],
   "useEffect, useLayoutEffect and React.useEffect must each be reported",
+);
+assert.deepEqual(
+  byFile.get("src/Namespace.tsx"),
+  [],
+  "a namespace import of react is allowed when no effect is used",
 );
 
 for (const r of results) {
