@@ -49,6 +49,11 @@ expectRules("src/math.test.ts", [
   "vitest/expect-expect",
 ]);
 expectRules("src/Widget.tsx", ["react-hooks/rules-of-hooks"]);
+assert.deepEqual(
+  byFile.get("src/Effects.tsx"),
+  ["no-restricted-imports", "no-restricted-imports", "no-restricted-syntax"],
+  "useEffect, useLayoutEffect and React.useEffect must each be reported",
+);
 
 for (const r of results) {
   for (const m of r.messages) {
