@@ -70,6 +70,21 @@ assert.deepEqual(
   "a namespace import of react is allowed when no effect is used",
 );
 
+assert.deepEqual(
+  byFile.get("src/comments.ts"),
+  [
+    "lint-config/no-comments",
+    "lint-config/no-comments",
+    "lint-config/no-comments",
+  ],
+  "line, block and doc comments must be reported; prettier-ignore and bundler hints must not",
+);
+assert.deepEqual(
+  byFile.get("src/config.js"),
+  ["lint-config/no-comments"],
+  "JSDoc types in plain JS are allowed; a prose doc comment is not",
+);
+
 for (const r of results) {
   for (const m of r.messages) {
     assert.notEqual(

@@ -7,6 +7,7 @@ import { defineConfig, globalIgnores } from "eslint/config";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 import { errorsOnly } from "./errors-only.js";
+import { plugin as lintConfig } from "./no-comments.js";
 
 export const defaultIgnores = [
   "**/node_modules/",
@@ -114,6 +115,13 @@ export function base({ tsconfigRootDir, ignores = [] }) {
           "@eslint-community/eslint-comments/no-unlimited-disable": "error",
           "@eslint-community/eslint-comments/disable-enable-pair": "error",
         },
+      },
+
+      // Names, types and tests carry the meaning; comments drift from the code.
+      {
+        name: "lint-config/no-comments",
+        plugins: { "lint-config": lintConfig },
+        rules: { "lint-config/no-comments": "error" },
       },
 
       // Plain JS files (config files, scripts) are not in a tsconfig.
